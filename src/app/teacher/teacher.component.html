@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<!--<div class="container">-->
+<!--<form role="form" id="enter-teacher-form" >-->
+<!--    <div class="form-group">-->
+<!--          <label >Enter name</label>-->
+<!--          <input class="form-control" type="text" [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="Name">-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label >Enter age</label>-->
+<!--    <input class="form-control" type="text" [(ngModel)]="age"   [ngModelOptions]="{standalone: true}" placeholder="age">-->
+<!--    </div>-->
+<!--          <button type="submit" class="btn btn-primary" (click)="createTeacher()"><i class="fa fa-sign-in"></i>-->
+<!--            Δημιουργία-->
+<!--          </button>-->
+<!--  </form>-->
+<!--</div>-->
+<body>
+<div class="myTitle">
+  <h1 align="center">Teacher's plan</h1>
+</div>
+<div id="login-box">
+  <div class="left">
+    <h1>Sign up</h1>
+
+    <input type="text" name="name" placeholder="Name" [(ngModel)]="name"/>
+    <input type="text" name="surname" placeholder="Surname" [(ngModel)]="surname"/>
+    <input type="text" name="email" placeholder="E-mail" [(ngModel)]="email"/>
+    <input type="password" name="password" placeholder="Password" [(ngModel)]="password"/>
+    <input type="password" name="password2" placeholder="Retype password" [(ngModel)]="password2"/>
+
+    <button [disabled]="checkPassword()" type="submit" name="signup_submit" value="Sign me up" (click)="createTeacher()">Sign up</button>
+  </div>
+
+  <div class="right">
+    <span class="loginwith">Sign in</span>
+    <input type="text" name="email" placeholder="E-mail" [(ngModel)]="logInEmail"/>
+    <input type="password" name="password" placeholder="Password" [(ngModel)]="logInPassword"/>
+    <button class="social-signin facebook">Log in</button>
+  </div>
+  <div class="or">OR</div>
+</div>
+</body>
+</html>
