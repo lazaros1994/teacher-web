@@ -21,7 +21,7 @@
 <!--</div>-->
 <body>
 <div class="myTitle">
-  <h1 align="center">Teacher's plan</h1>
+  <img src="../../assets/images/logo.png" width="150" height="150">
 </div>
 <div id="login-box">
   <div class="left">
@@ -40,7 +40,7 @@
     <span class="loginwith">Sign in</span>
     <input type="text" name="email" placeholder="E-mail" [(ngModel)]="logInEmail"/>
     <input type="password" name="password" placeholder="Password" [(ngModel)]="logInPassword"/>
-    <button class="social-signin facebook">Log in</button>
+    <button class="social-signin" (click)="logIn()">Log in</button>
   </div>
   <div class="or">OR</div>
 </div>

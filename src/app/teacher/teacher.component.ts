@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TeacherService} from './teacher.service';
+import {Teacher} from './teacher';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-teacher',
@@ -16,9 +18,10 @@ export class TeacherComponent implements OnInit {
   password2: string;
   logInEmail: string;
   logInPassword: string;
+  teacher: Teacher;
 
-
-  constructor(private teacherService: TeacherService) {
+  constructor(private teacherService: TeacherService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -39,6 +42,17 @@ export class TeacherComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  logIn(): void {
+    this.teacherService.logIn(this.logInEmail, this.logInPassword).subscribe(data => {
+      this.teacher = data;
+      localStorage.setItem('teacher', JSON.stringify(this.teacher));
+      this.router.navigate(['/home']);
+    }, errorResponse => {
+      alert('Wrong email or password');
+    });
+
   }
 
 }

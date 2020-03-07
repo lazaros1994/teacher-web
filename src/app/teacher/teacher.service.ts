@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Teacher} from './teacher';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'}),
@@ -16,13 +17,24 @@ export class TeacherService {
   }
 
   private createTeacherUrl = '/teacher/create';
+  private findTeacherUrl = 'teacher/find';
 
   public createTeacher(name, surname, email, password) {
     const postRequestParameters = new FormData();
+
     postRequestParameters.append('name', name);
     postRequestParameters.append('surname', surname);
     postRequestParameters.append('email', email);
     postRequestParameters.append('password', password);
+
     return this.http.post<string>(this.createTeacherUrl, postRequestParameters);
+  }
+
+  public logIn(email, password) {
+    const params = new HttpParams()
+      .set('email', email)
+      .set('password', password);
+
+    return this.http.get<Teacher>(this.findTeacherUrl, {params});
   }
 }
