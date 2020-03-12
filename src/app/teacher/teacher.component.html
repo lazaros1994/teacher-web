@@ -51,15 +51,15 @@
                    placeholder="Surname">
           </div>
           <div class="form-group">
-            <input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" class="form-control"
+            <input type="myemail" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" class="form-control"
                    placeholder="Email">
           </div>
           <div class="form-group">
-            <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control"
+            <input type="password 2" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control"
                    placeholder="Password">
           </div>
           <div class="form-group">
-            <input type="password" [(ngModel)]="password2" [ngModelOptions]="{standalone: true}" class="form-control"
+            <input type="password 2" [(ngModel)]="password2" [ngModelOptions]="{standalone: true}" class="form-control"
                    placeholder="Confirm Password">
           </div>
           <button  type="submit" [disabled]="checkPassword()" class="btn btn-primary btn-rounded" (click)="createTeacher()">
