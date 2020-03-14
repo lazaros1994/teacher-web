@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
-<!--  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>-->
-<!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -37,22 +39,22 @@
       </li>
 
       <!-- Dropdown -->
-<!--      <li class="nav-item dropdown">-->
-<!--        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"-->
-<!--           aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
-<!--        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">-->
-<!--          <a class="dropdown-item" href="#">Action</a>-->
-<!--          <a class="dropdown-item" href="#">Another action</a>-->
-<!--          <a class="dropdown-item" href="#">Something else here</a>-->
-<!--        </div>-->
-<!--      </li>-->
+      <!--      <li class="nav-item dropdown">-->
+      <!--        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"-->
+      <!--           aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
+      <!--        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">-->
+      <!--          <a class="dropdown-item" href="#">Action</a>-->
+      <!--          <a class="dropdown-item" href="#">Another action</a>-->
+      <!--          <a class="dropdown-item" href="#">Something else here</a>-->
+      <!--        </div>-->
+      <!--      </li>-->
 
     </ul>
     <!-- Links -->
 
     <form class="form-inline">
 
-        <a class="dropdown-item" href="#" style="color: grey;">Αποσύνδεση</a>
+      <a class="dropdown-item" href="#" style="color: grey;">Αποσύνδεση</a>
 
     </form>
   </div>
@@ -60,120 +62,197 @@
 
 </nav>
 
-  <div class="cards">
-    <div class="box">
+<div class="cards">
+  <div class="box">
 
-      <p class="day">Δευτέρα</p>
+    <p class="day">Δευτέρα</p>
 
-      <div class="box-body">
-        The body of the box
-      </div>
+    <div class="box-body">
+      The body of the box
+    </div>
 
-      <div class="box-footer">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-          Προσθήκη
-        </button>
+    <div class="box-footer">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        Προσθήκη
+      </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <h5 class="modal-title" id="exampleModalLongTitle">Προσθήκη Μαθήματος</h5>
-<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                  <span aria-hidden="true">&times;</span>-->
-<!--                </button>-->
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Κλείσiμο</button>
-                <button type="button" class="btn btn-primary">Αποθήκευση</button>
-              </div>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter" role="dialog"
+           aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <b><h5 class="modal-title" id="exampleModalLongTitle">Προσθήκη Μαθήματος</h5></b>
+            <div class="modal-body">
+              <table>
+                <tr>
+                  <td>
+                    <label for="course-form">Μάθημα:</label></td>
+                  <td>
+                    <form id="course-form" action="/action_page.php" method="get">
+                      <input id="course" list="browsers" name="browser">
+                      <datalist id="browsers">
+                        <option value="Μαθηματικά">
+                        <option value="Φυσική">
+                        <option value="Χημεία">
+                        <option value="Έκθεση">
+                        <option value="Αρχαία">
+                        <option value="Πληροφορική">
+                        <option value="Λογοτεχνία">
+                        <option value="Οικονομικά">
+                        <option value="Ιστορία">
+                      </datalist>
+
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="student-name">Όνομα μαθητή:</label>
+                  </td>
+                  <td>
+                    <input type="text" id="student-name"></td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="student-surname">Επίθετο μαθητή:</label>
+                  </td>
+                  <td>
+                    <input type="text" id="student-surname">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="start-time">Ώρα έναρξης:</label>
+                  </td>
+                  <td>
+                    <input type="time" id="start-time" name="appt"
+                           min="09:00" max="18:00" required></td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="end-time">Ώρα λήξης:</label>
+                  </td>
+                  <td>
+                    <input type="time" id="end-time" name="appt"
+                           min="09:00" max="18:00" required>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="input-group-addon">Ευρώ(€) ανά ώρα</span>
+                  </td>
+                  <td>
+                    <div>
+
+                      <div>
+
+                        <input id="money" type="number" value="5" min="0" step="0.5" data-number-to-fixed="2"
+                               data-number-stepfactor="100"/>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="modal-footer">
+
+
+              <button type="button" class="btn  btn-secondary " data-dismiss="modal">Κλείσιμο</button>
+              <br>
+
+
+              <button type="button" class="btn btn-primary">Αποθήκευση</button>
+
+
             </div>
           </div>
         </div>
       </div>
-      <!-- box-footer -->
     </div>
-    <div class="box">
-
-      <p class="day">Τρίτη</p>
-
-      <div class="box-body">
-        The body of the box
-      </div>
-
-      <div class="box-footer">
-        <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-      </div>
-      <!-- box-footer -->
-    </div>
-    <div class="box">
-
-      <p class="day">Τετάρτη</p>
-
-      <div class="box-body">
-        The body of the box
-      </div>
-
-      <div class="box-footer">
-        <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-      </div>
-      <!-- box-footer -->
-    </div>
-    <div class="box">
-
-      <p class="day">Πέμπτη</p>
-
-      <div class="box-body">
-        The body of the box
-      </div>
-
-      <div>
-        <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-      </div>
-      <!-- box-footer -->
-    </div>
-    <div class="box">
-
-      <p class="day">Παρασκευή</p>
-
-      <div class="box-body">
-        The body of the box
-      </div>
-
-      <div class="box-footer">
-        <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-      </div>
-      <!-- box-footer -->
-    </div>
-    <div class="box">
-
-      <p class="day">Σάββατο</p>
-
-      <div class="box-body">
-        The body of the box
-      </div>
-
-      <div class="box-footer">
-        <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-      </div>
-      <!-- box-footer -->
-    </div>
-    <div class="box">
-
-      <p class="day">Κυριακή</p>
-
-      <div class="box-body">
-        The body of the box
-      </div>
-
-      <div class="box-footer">
-        <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-      </div>
-      <!-- box-footer -->
-    </div>
+    <!-- box-footer -->
   </div>
+  <div class="box">
+
+    <p class="day">Τρίτη</p>
+
+    <div class="box-body">
+      The body of the box
+    </div>
+
+    <div class="box-footer">
+      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
+    </div>
+    <!-- box-footer -->
+  </div>
+  <div class="box">
+
+    <p class="day">Τετάρτη</p>
+
+    <div class="box-body">
+      The body of the box
+    </div>
+
+    <div class="box-footer">
+      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
+    </div>
+    <!-- box-footer -->
+  </div>
+  <div class="box">
+
+    <p class="day">Πέμπτη</p>
+
+    <div class="box-body">
+      The body of the box
+    </div>
+
+    <div>
+      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
+    </div>
+    <!-- box-footer -->
+  </div>
+  <div class="box">
+
+    <p class="day">Παρασκευή</p>
+
+    <div class="box-body">
+      The body of the box
+    </div>
+
+    <div class="box-footer">
+      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
+    </div>
+    <!-- box-footer -->
+  </div>
+  <div class="box">
+
+    <p class="day">Σάββατο</p>
+
+    <div class="box-body">
+      The body of the box
+    </div>
+
+    <div class="box-footer">
+      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
+    </div>
+    <!-- box-footer -->
+  </div>
+  <div class="box">
+
+    <p class="day">Κυριακή</p>
+
+    <div class="box-body">
+      The body of the box
+    </div>
+
+    <div class="box-footer">
+      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
+    </div>
+    <!-- box-footer -->
+  </div>
+</div>
 
 </body>
 </html>

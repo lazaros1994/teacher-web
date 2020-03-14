@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Teacher} from './teacher';
+import {Teacher} from '../models/teacher';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'}),
@@ -11,7 +11,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 
-export class TeacherService {
+export class AuthService {
 
   constructor(private http: HttpClient) {
   }

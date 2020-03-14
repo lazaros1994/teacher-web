@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {TeacherService} from './teacher.service';
-import {Teacher} from './teacher';
+import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
+import {Teacher} from '../models/teacher';
 
 @Component({
-  selector: 'app-teacher',
-  templateUrl: './teacher.component.html',
-  styleUrls: ['./teacher.component.css']
+  selector: 'app-auth',
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.css']
 })
-export class TeacherComponent implements OnInit {
+export class AuthComponent implements OnInit {
 
   age: number;
   name: string;
@@ -20,7 +20,7 @@ export class TeacherComponent implements OnInit {
   logInPassword: string;
   teacher: Teacher;
 
-  constructor(private teacherService: TeacherService,
+  constructor(private teacherService: AuthService,
               private router: Router) {
   }
 
@@ -52,7 +52,6 @@ export class TeacherComponent implements OnInit {
     }, errorResponse => {
       alert('Wrong email or password');
     });
-
   }
 
 }
