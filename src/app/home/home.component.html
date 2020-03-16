@@ -11,19 +11,15 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="background-color: black">
-
   <!-- Navbar brand -->
   <a class="navbar-brand" href="#"><img src="../../assets/images/logo.png" width="30" height="30"></a>
-
   <!-- Collapse button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
           aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <!-- Collapsible content -->
   <div class="collapse navbar-collapse" id="basicExampleNav">
-
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
@@ -37,59 +33,41 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Προφίλ</a>
       </li>
-
-      <!-- Dropdown -->
-      <!--      <li class="nav-item dropdown">-->
-      <!--        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"-->
-      <!--           aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
-      <!--        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">-->
-      <!--          <a class="dropdown-item" href="#">Action</a>-->
-      <!--          <a class="dropdown-item" href="#">Another action</a>-->
-      <!--          <a class="dropdown-item" href="#">Something else here</a>-->
-      <!--        </div>-->
-      <!--      </li>-->
-
     </ul>
     <!-- Links -->
-
     <form class="form-inline">
-
       <a class="dropdown-item" href="#" style="color: grey;">Αποσύνδεση</a>
-
     </form>
   </div>
   <!-- Collapsible content -->
-
 </nav>
-
 <div class="cards">
-  <div class="box">
+  <div  class="box"  *ngFor="let day of this.week; let i = index">
 
-    <p class="day">Δευτέρα</p>
+    <p class="day">{{day}}</p>
 
     <div class="box-body">
       The body of the box
     </div>
-
     <div class="box-footer">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+      <button type="button" class="btn btn-primary" data-toggle="modal" attr.data-target="#modal{{day}}">
         Προσθήκη
       </button>
-
       <!-- Modal -->
-      <div class="modal fade" id="exampleModalCenter" role="dialog"
+      <div  data-backdrop="static" data-keyboard="false"  class="modal fade" id="modal{{day}}" role="dialog"
            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div  class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <b><h5 class="modal-title" id="exampleModalLongTitle">Προσθήκη Μαθήματος</h5></b>
             <div class="modal-body">
               <table>
                 <tr>
                   <td>
-                    <label for="course-form">Μάθημα:</label></td>
+                    <label for="course-form{{day}}">Μάθημα:</label></td>
                   <td>
-                    <form id="course-form" action="/action_page.php" method="get">
-                      <input id="course" list="browsers" name="browser">
+                    <form  id="course-form{{day}}" action="/action_page.php" method="get">
+                      <input [(ngModel)]="this.lesson.course" id="course{{day}}" list="browsers" name="browser">
                       <datalist id="browsers">
                         <option value="Μαθηματικά">
                         <option value="Φυσική">
@@ -101,41 +79,38 @@
                         <option value="Οικονομικά">
                         <option value="Ιστορία">
                       </datalist>
-
                     </form>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <label for="student-name">Όνομα μαθητή:</label>
+                    <label for="student-name{{day}}">Όνομα μαθητή:</label>
                   </td>
                   <td>
-                    <input type="text" id="student-name"></td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <label for="student-surname">Επίθετο μαθητή:</label>
-                  </td>
-                  <td>
-                    <input type="text" id="student-surname">
-                  </td>
+                    <input [(ngModel)]="lesson.studentName" type="text" id="student-name{{day}}"></td>
                 </tr>
                 <tr>
                   <td>
-                    <label for="start-time">Ώρα έναρξης:</label>
+                    <label for="student-surname{{day}}">Επίθετο μαθητή:</label>
                   </td>
                   <td>
-                    <input type="time" id="start-time" name="appt"
+                    <input [(ngModel)]="lesson.studentSurname" type="text" id="student-surname{{day}}">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="start-time{{day}}">Ώρα έναρξης:</label>
+                  </td>
+                  <td>
+                    <input [(ngModel)]="startTime" type="time" id="start-time{{day}}" name="appt"
                            min="09:00" max="18:00" required></td>
                 </tr>
-
                 <tr>
                   <td>
-                    <label for="end-time">Ώρα λήξης:</label>
+                    <label for="end-time{{day}}">Ώρα λήξης:</label>
                   </td>
                   <td>
-                    <input type="time" id="end-time" name="appt"
+                    <input [(ngModel)]="endTime" type="time" id="end-time{{day}}" name="appt"
                            min="09:00" max="18:00" required>
                   </td>
                 </tr>
@@ -145,10 +120,9 @@
                   </td>
                   <td>
                     <div>
-
                       <div>
-
-                        <input id="money" type="number" value="5" min="0" step="0.5" data-number-to-fixed="2"
+                        <input [(ngModel)]="lesson.euroPerHour" id="money{{day}}" type="number" value="5" min="0" step="0.5"
+                               data-number-to-fixed="2"
                                data-number-stepfactor="100"/>
                       </div>
                     </div>
@@ -156,17 +130,10 @@
                 </tr>
               </table>
             </div>
-
             <div class="modal-footer">
-
-
-              <button type="button" class="btn  btn-secondary " data-dismiss="modal">Κλείσιμο</button>
+              <button type="button" class="btn  btn-secondary " data-dismiss="modal" (click)="closeModal()">Κλείσιμο</button>
               <br>
-
-
-              <button type="button" class="btn btn-primary">Αποθήκευση</button>
-
-
+              <button (click)="createLesson(day)" type="button" data-dismiss="modal" class="btn btn-primary">Αποθήκευση</button>
             </div>
           </div>
         </div>
@@ -174,85 +141,6 @@
     </div>
     <!-- box-footer -->
   </div>
-  <div class="box">
-
-    <p class="day">Τρίτη</p>
-
-    <div class="box-body">
-      The body of the box
-    </div>
-
-    <div class="box-footer">
-      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-    </div>
-    <!-- box-footer -->
-  </div>
-  <div class="box">
-
-    <p class="day">Τετάρτη</p>
-
-    <div class="box-body">
-      The body of the box
-    </div>
-
-    <div class="box-footer">
-      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-    </div>
-    <!-- box-footer -->
-  </div>
-  <div class="box">
-
-    <p class="day">Πέμπτη</p>
-
-    <div class="box-body">
-      The body of the box
-    </div>
-
-    <div>
-      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-    </div>
-    <!-- box-footer -->
-  </div>
-  <div class="box">
-
-    <p class="day">Παρασκευή</p>
-
-    <div class="box-body">
-      The body of the box
-    </div>
-
-    <div class="box-footer">
-      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-    </div>
-    <!-- box-footer -->
-  </div>
-  <div class="box">
-
-    <p class="day">Σάββατο</p>
-
-    <div class="box-body">
-      The body of the box
-    </div>
-
-    <div class="box-footer">
-      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-    </div>
-    <!-- box-footer -->
-  </div>
-  <div class="box">
-
-    <p class="day">Κυριακή</p>
-
-    <div class="box-body">
-      The body of the box
-    </div>
-
-    <div class="box-footer">
-      <button type="button" class="btn btn-primary rounded-right">Προσθήκη</button>
-    </div>
-    <!-- box-footer -->
-  </div>
 </div>
-
 </body>
 </html>

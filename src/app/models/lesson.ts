@@ -1,13 +1,15 @@
 import {Teacher} from './teacher';
 
-export class TeacherHasLesson {
+export class Lesson {
   id: number;
   teacher: Teacher;
   studentName: string;
-  studentSurName: string;
+  studentSurname: string;
   day: string;
-  startHour: string;
-  endHour: string;
+  startHour: number;
+  startMinute: number;
+  endHour: number;
+  endMinute: number;
   course: string;
   euroPerHour: number;
 }

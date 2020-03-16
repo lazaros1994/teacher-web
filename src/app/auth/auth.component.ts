@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit {
   logInPassword: string;
   teacher: Teacher;
 
-  constructor(private teacherService: AuthService,
+  constructor(private authService: AuthService,
               private router: Router) {
   }
 
@@ -28,10 +28,13 @@ export class AuthComponent implements OnInit {
   }
 
   createTeacher(): void {
-    this.teacherService.createTeacher(this.name, this.surname, this.email, this.password).subscribe(successResponse => {
+    this.authService.createTeacher(this.name, this.surname, this.email, this.password).subscribe(successResponse => {
       alert(successResponse);
+      console.log('coble');
     }, errorResponse => {
-      alert(errorResponse.error);
+      alert(errorResponse);
+      console.log('oxi');
+
     });
   }
 
@@ -45,7 +48,7 @@ export class AuthComponent implements OnInit {
   }
 
   logIn(): void {
-    this.teacherService.logIn(this.logInEmail, this.logInPassword).subscribe(data => {
+    this.authService.logIn(this.logInEmail, this.logInPassword).subscribe(data => {
       this.teacher = data;
       localStorage.setItem('teacher', JSON.stringify(this.teacher));
       this.router.navigate(['/home']);
