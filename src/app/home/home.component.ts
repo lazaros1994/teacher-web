@@ -66,6 +66,18 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  checkEmptyField(): boolean {
+    if (this.startTime === undefined || this.endTime === undefined || this.lessonCreate.course === undefined || this.lessonCreate.studentName === undefined ||
+      this.lessonCreate.studentSurname === undefined
+      || this.lessonCreate.euroPerHour === undefined || this.startTime === '' || this.endTime === '' || this.lessonCreate.course === '' || this.lessonCreate.studentName === '' ||
+      this.lessonCreate.studentSurname === ''
+      || this.lessonCreate.euroPerHour === null) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
 }
 
 

@@ -138,7 +138,8 @@
             <div class="modal-footer">
               <button type="button" class="btn  btn-secondary " data-dismiss="modal" (click)="closeModal()">Κλείσιμο</button>
               <br>
-              <button (click)="createLesson(day)" type="button" data-dismiss="modal" class="btn btn-primary">Αποθήκευση</button>
+              <button (click)="createLesson(day)"  title="Συπληρώστε όλα τα πεδία (Μάθημα, ώρα εναρξης κλπ.)"
+                      [disabled]="checkEmptyField()" type="button" data-dismiss="modal" class="btn btn-primary">Αποθήκευση</button>
             </div>
           </div>
         </div>
