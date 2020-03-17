@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   week: string[] = [];
   teacher: Teacher;
-  lesson: Lesson = new Lesson();
+  lessonCreate: Lesson = new Lesson();
   startTime: string;
   endTime: string;
   lessons: Lesson[] = [];
@@ -26,29 +26,32 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.teacher = JSON.parse(localStorage.getItem('teacher'));
     this.week = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
+    this.getLessons();
   }
 
   createLesson(day): void {
-    this.lesson.teacher = this.teacher;
-    this.lesson.day = day;
+    console.log(this.startTime);
+    this.lessonCreate.teacher = this.teacher;
+    this.lessonCreate.day = day;
     const startTimeTokens = this.startTime.split(':', 2);
-    this.lesson.startHour = +startTimeTokens[0];
-    this.lesson.startMinute = +startTimeTokens[1];
+    this.lessonCreate.startHour = startTimeTokens[0];
+    this.lessonCreate.startMinute = startTimeTokens[1];
     const endTimeTokens = this.endTime.split(':', 2);
-    this.lesson.endHour = +endTimeTokens[0];
-    this.lesson.endMinute = +endTimeTokens[1];
-    this.homeService.createLesson(this.lesson).subscribe(successResponse => {
+    this.lessonCreate.endHour = endTimeTokens[0];
+    this.lessonCreate.endMinute = endTimeTokens[1];
+    this.homeService.createLesson(this.lessonCreate).subscribe(successResponse => {
       alert(successResponse);
-      this.lesson = new Lesson();
+      this.lessonCreate = new Lesson();
       this.startTime = '';
       this.endTime = '';
+      this.getLessons();
     }, errorResponse => {
       alert(errorResponse);
     });
   }
 
   closeModal(): void {
-    this.lesson = new Lesson();
+    this.lessonCreate = new Lesson();
     this.startTime = '';
     this.endTime = '';
 
@@ -57,6 +60,7 @@ export class HomeComponent implements OnInit {
   getLessons(): void {
     this.homeService.getLessons(this.teacher).subscribe(data => {
       this.lessons = data;
+      console.log(this.lessons);
     }, errorResponse => {
       alert(errorResponse);
     });

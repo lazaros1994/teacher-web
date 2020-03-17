@@ -6,10 +6,10 @@ export class Lesson {
   studentName: string;
   studentSurname: string;
   day: string;
-  startHour: number;
-  startMinute: number;
-  endHour: number;
-  endMinute: number;
+  startHour: string;
+  startMinute: string;
+  endHour: string;
+  endMinute: string;
   course: string;
   euroPerHour: number;
 }

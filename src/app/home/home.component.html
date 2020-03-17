@@ -46,8 +46,13 @@
 
     <p class="day">{{day}}</p>
 
-    <div class="box-body">
-      The body of the box
+    <div class="box-body" >
+      <div  *ngFor="let lesson of this.lessons">
+
+        <p *ngIf="lesson.day == day"><b>{{lesson.startHour}}:{{lesson.startMinute}} - {{lesson.endHour}}:{{lesson.endMinute}}</b><br> {{lesson.studentName}}
+                {{lesson.studentSurname}} - {{lesson.course}}</p>
+
+      </div>
     </div>
     <div class="box-footer">
       <button type="button" class="btn btn-primary" data-toggle="modal" attr.data-target="#modal{{day}}">
@@ -67,7 +72,7 @@
                     <label for="course-form{{day}}">Μάθημα:</label></td>
                   <td>
                     <form  id="course-form{{day}}" action="/action_page.php" method="get">
-                      <input [(ngModel)]="this.lesson.course" id="course{{day}}" list="browsers" name="browser">
+                      <input [(ngModel)]="this.lessonCreate.course" id="course{{day}}" list="browsers" name="browser">
                       <datalist id="browsers">
                         <option value="Μαθηματικά">
                         <option value="Φυσική">
@@ -87,14 +92,14 @@
                     <label for="student-name{{day}}">Όνομα μαθητή:</label>
                   </td>
                   <td>
-                    <input [(ngModel)]="lesson.studentName" type="text" id="student-name{{day}}"></td>
+                    <input [(ngModel)]="lessonCreate.studentName" type="text" id="student-name{{day}}"></td>
                 </tr>
                 <tr>
                   <td>
                     <label for="student-surname{{day}}">Επίθετο μαθητή:</label>
                   </td>
                   <td>
-                    <input [(ngModel)]="lesson.studentSurname" type="text" id="student-surname{{day}}">
+                    <input [(ngModel)]="lessonCreate.studentSurname" type="text" id="student-surname{{day}}">
                   </td>
                 </tr>
                 <tr>
@@ -121,7 +126,7 @@
                   <td>
                     <div>
                       <div>
-                        <input [(ngModel)]="lesson.euroPerHour" id="money{{day}}" type="number" value="5" min="0" step="0.5"
+                        <input [(ngModel)]="lessonCreate.euroPerHour" id="money{{day}}" type="number" value="5" min="0" step="0.5"
                                data-number-to-fixed="2"
                                data-number-stepfactor="100"/>
                       </div>
