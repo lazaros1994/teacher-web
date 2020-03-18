@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { AuthComponent } from './auth/auth.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +17,14 @@ import { AuthComponent } from './auth/auth.component';
     HomeComponent,
     ProfileComponent,
     AuthComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

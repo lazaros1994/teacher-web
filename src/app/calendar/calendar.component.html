@@ -1,0 +1,112 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!--  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">-->
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<!--  <title>Calendar of Events</title>-->
+<!--  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark primary-color" style="background-color: black">
+  <!-- Navbar brand -->
+  <a class="navbar-brand" href="#"><img src="../../assets/images/logo.png" width="30" height="30"></a>
+  <!-- Collapse button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- Collapsible content -->
+  <div class="collapse navbar-collapse" id="basicExampleNav">
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link"routerLink="/home">Αρχική
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Ημερολόγιο</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Προφίλ</a>
+      </li>
+    </ul>
+    <!-- Links -->
+    <form class="form-inline">
+      <a class="dropdown-item" href="#" style="color: grey;">Αποσύνδεση</a>
+    </form>
+  </div>
+  <!-- Collapsible content -->
+</nav>
+
+
+
+
+<!--<div class="container">-->
+<!--  <div class="row">-->
+<!--    <div class="twelve columns">-->
+
+<!--      <div id="calendar">-->
+
+<!--        <div class="text-center">-->
+<!--          <button class="month-selector" (click)="previousMonth()">previous month</button>-->
+
+<!--          <h2 class="month-header">{{ selectedDate | date:'yyyy-MMMM'}}</h2><button class="month-selector" (click)="nextMonth()"> next month </button>-->
+<!--        </div>-->
+
+<!--        <hr />-->
+
+<!--        <div id="cal-wrapper">-->
+<!--            <div *ngFor="let day of this.allDays; let i = index"  class="col-xs-12 col-sm-6 col-md-3 sevencols col-lg-2">-->
+<!--              <div  *ngIf="this.day.getDate() > now.getDate()" class="date-header">-->
+<!--                <h4>{{i + 1}} {{ day | date:'EEE'}} </h4>-->
+<!--              </div>-->
+
+<!--              <div *ngIf="this.day.getDate() === now.getDate()" style="background-color: deepskyblue" class="date-header">-->
+<!--                <h4>{{i + 1}} {{ day | date:'EEE'}} </h4>-->
+<!--              </div>-->
+
+<!--              <div  *ngIf="this.day.getDate() < now.getDate()" style="background-color: grey" class="date-header">-->
+<!--                <h4>{{i + 1}} {{ day | date:'EEE'}} </h4>-->
+<!--              </div>-->
+
+<!--              <div class="date-item none">-->
+<!--                <b data="no-items" class="no-items">Currently No Events Scheduled</b>-->
+<!--              </div>-->
+
+<!--            </div>-->
+
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<div class="text-center">
+  <h2 class="month-header">{{ selectedDate | date:'yyyy-MMMM'}}</h2>
+  <button style="margin-right: 1%" class="btn-sm" (click)="previousMonth()">prev month</button>
+  <button style="margin-left: 1%" class="btn-sm" (click)="nextMonth()"> next month </button>
+</div>
+
+<div class="cards">
+  <div  class="box"  *ngFor="let day of this.allDays; let i = index">
+
+    <p  *ngIf="this.day > now" class="day">{{i + 1}} {{ day | date:'EEE'}} </p>
+    <p   style="background-color: lightgray" *ngIf="this.day < now" class="day">{{i + 1}} {{ day | date:'EEE'}} </p>
+
+    <div class="box-body" >
+      here is the main info
+    </div>
+    <div class="box-footer">
+      <button type="button" data-toggle="modal" attr.data-target="#modal{{day}}">
+        Προσθήκη
+      </button>
+      <!-- Modal -->
+
+    </div>
+    <!-- box-footer -->
+  </div>
+</div>
+</body>
+</html>
