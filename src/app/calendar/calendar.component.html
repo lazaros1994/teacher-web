@@ -1,9 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!--  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">-->
+  <!--  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">-->
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<!--  <title>Calendar of Events</title>-->
-<!--  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
+  <!--  <title>Calendar of Events</title>-->
+  <!--  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
 </head>
 
 <body>
@@ -20,90 +20,222 @@
   <div class="collapse navbar-collapse" id="basicExampleNav">
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link"routerLink="/home">Αρχική
+      <li class="nav-item ">
+        <a class="nav-link" routerLink="/home">Home
           <span class="sr-only">(current)</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Ημερολόγιο</a>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/calendar">Calendar</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Προφίλ</a>
+        <a class="nav-link" routerLink="/profile">Profile</a>
       </li>
     </ul>
     <!-- Links -->
     <form class="form-inline">
-      <a class="dropdown-item" href="#" style="color: grey;">Αποσύνδεση</a>
+      <a class="dropdown-item" href="#" style="color: grey;">Log Out</a>
     </form>
   </div>
   <!-- Collapsible content -->
 </nav>
 
 
-
-
-<!--<div class="container">-->
-<!--  <div class="row">-->
-<!--    <div class="twelve columns">-->
-
-<!--      <div id="calendar">-->
-
-<!--        <div class="text-center">-->
-<!--          <button class="month-selector" (click)="previousMonth()">previous month</button>-->
-
-<!--          <h2 class="month-header">{{ selectedDate | date:'yyyy-MMMM'}}</h2><button class="month-selector" (click)="nextMonth()"> next month </button>-->
-<!--        </div>-->
-
-<!--        <hr />-->
-
-<!--        <div id="cal-wrapper">-->
-<!--            <div *ngFor="let day of this.allDays; let i = index"  class="col-xs-12 col-sm-6 col-md-3 sevencols col-lg-2">-->
-<!--              <div  *ngIf="this.day.getDate() > now.getDate()" class="date-header">-->
-<!--                <h4>{{i + 1}} {{ day | date:'EEE'}} </h4>-->
-<!--              </div>-->
-
-<!--              <div *ngIf="this.day.getDate() === now.getDate()" style="background-color: deepskyblue" class="date-header">-->
-<!--                <h4>{{i + 1}} {{ day | date:'EEE'}} </h4>-->
-<!--              </div>-->
-
-<!--              <div  *ngIf="this.day.getDate() < now.getDate()" style="background-color: grey" class="date-header">-->
-<!--                <h4>{{i + 1}} {{ day | date:'EEE'}} </h4>-->
-<!--              </div>-->
-
-<!--              <div class="date-item none">-->
-<!--                <b data="no-items" class="no-items">Currently No Events Scheduled</b>-->
-<!--              </div>-->
-
-<!--            </div>-->
-
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
 <div class="text-center">
   <h2 class="month-header">{{ selectedDate | date:'yyyy-MMMM'}}</h2>
   <button style="margin-right: 1%" class="btn-sm" (click)="previousMonth()">prev month</button>
-  <button style="margin-left: 1%" class="btn-sm" (click)="nextMonth()"> next month </button>
+  <button style="margin-left: 1%" class="btn-sm" (click)="nextMonth()"> next month</button>
 </div>
 
 <div class="cards">
-  <div  class="box"  *ngFor="let day of this.allDays; let i = index">
+  <div class="box" *ngFor="let day of this.allDays; let i = index">
 
-    <p  *ngIf="this.day > now" class="day">{{i + 1}} {{ day | date:'EEE'}} </p>
-    <p   style="background-color: lightgray" *ngIf="this.day < now" class="day">{{i + 1}} {{ day | date:'EEE'}} </p>
+    <p *ngIf="(day.getFullYear() > now.getFullYear() )|| (day.getFullYear() === now.getFullYear() && day.getMonth() > now.getMonth() ) ||
+    ( day.getFullYear() === now.getFullYear() && day.getMonth() === now.getMonth() && day.getDate() > now.getDate()) "
+       class="day">
+      {{i + 1}} {{ day | date:'EEE'}} </p>
 
-    <div class="box-body" >
-      here is the main info
+    <p style="background-color: #8000ff"
+       *ngIf="day.getFullYear() === now.getFullYear() && day.getMonth() === now.getMonth() && day.getDate() === now.getDate()"
+       class="day">
+      {{i + 1}} {{ day | date:'EEE'}}  (Σήμερα) </p>
+
+    <p style="background-color: lightgray" *ngIf="(day.getFullYear() < now.getFullYear() )|| (day.getFullYear() === now.getFullYear() && day.getMonth() < now.getMonth() ) ||
+    ( day.getFullYear() === now.getFullYear() && day.getMonth() === now.getMonth() && day.getDate() < now.getDate()) "
+       class="day">
+      {{i + 1}} {{ day | date:'EEE'}} </p>
+
+    <div class="box-body">
+      <div *ngFor="let lesson of this.lessons; let j = index">
+
+        <div class="box-info" *ngIf="lesson.day === week[day.getDay()]">
+          <b>{{lesson.startHour}}:{{lesson.startMinute}} - {{lesson.endHour}}:{{lesson.endMinute}}</b><br> {{lesson.studentName}}
+          {{lesson.studentSurname}}  {{lesson.course}}
+        </div>
+      </div>
     </div>
     <div class="box-footer">
-      <button type="button" data-toggle="modal" attr.data-target="#modal{{day}}">
-        Προσθήκη
+      <button class="btn-sm" type="button" data-toggle="modal" attr.data-target="#chooseModal{{i}}">
+        Edit
       </button>
-      <!-- Modal -->
 
+<!--     Modal Choose -->
+      <div class="modal fade" id="chooseModal{{i}}" role="dialog"
+           aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <b><h5 class="modal-title">Choose action:</h5></b>
+            <div class="modal-body">
+
+              <table style="width: 100%">
+
+                <tr>
+                  <td  style="text-align: center; width: 50%;padding-right: 10%">
+                    <button class="btn-sm" style="background-color: darkseagreen; color: white;" data-toggle="modal" attr.data-target="#addModal{{i}}" data-dismiss="modal">New lesson</button>
+                  </td>
+                  <td style="padding-right: 30%">
+                    <button class="btn-sm" style="background-color: red; color: white;" data-toggle="modal" attr.data-target="#modal{{i}}" data-dismiss="modal">Cancel lesson</button>
+                  </td>
+                </tr>
+
+              </table>
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn  btn-secondary " data-dismiss="modal">Κλείσιμο</button>
+              <br>
+              <button title="Συπληρώστε όλα τα πεδία (Μάθημα, ώρα εναρξης κλπ.)"
+                      type="button" data-dismiss="modal" class="btn btn-primary">Αποθήκευση
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--     enddddddddddddddddddddddddd of modal choose -->
+<!--  Add lesson modal    -->
+      <div  data-backdrop="static" data-keyboard="false"  class="modal fade" id="addModal{{i}}" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+        <div  class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <b><h5 class="modal-title" id="">Προσθήκη Μαθήματος</h5></b>
+            <div class="modal-body">
+              <table>
+                <tr>
+                  <td>
+                    <label for="course-form{{i}}">Μάθημα:</label></td>
+                  <td>
+                    <form  id="course-form{{i}}" action="/action_page.php" method="get">
+                      <input [(ngModel)]="this.lessonCreate.course" id="course{{i}}" list="browsers" name="browser">
+                      <datalist id="browsers">
+                        <option value="Μαθηματικά">
+                        <option value="Φυσική">
+                        <option value="Χημεία">
+                        <option value="Έκθεση">
+                        <option value="Αρχαία">
+                        <option value="Πληροφορική">
+                        <option value="Λογοτεχνία">
+                        <option value="Οικονομικά">
+                        <option value="Ιστορία">
+                      </datalist>
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="student-name{{i}}">Όνομα μαθητή:</label>
+                  </td>
+                  <td>
+                    <input [(ngModel)]="lessonCreate.studentName" type="text" id="student-name{{i}}"></td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="student-surname{{i}}">Επίθετο μαθητή:</label>
+                  </td>
+                  <td>
+                    <input [(ngModel)]="lessonCreate.studentSurname" type="text" id="student-surname{{i}}">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="start-time{{i}}">Ώρα έναρξης:</label>
+                  </td>
+                  <td>
+                    <input [(ngModel)]="startTime" type="time" id="start-time{{i}}" name="appt"
+                           min="09:00" max="18:00" required></td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="end-time{{i}}">Ώρα λήξης:</label>
+                  </td>
+                  <td>
+                    <input [(ngModel)]="endTime" type="time" id="end-time{{i}}" name="appt"
+                           min="09:00" max="18:00" required>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="input-group-addon">Ευρώ(€) ανά ώρα</span>
+                  </td>
+                  <td>
+                    <div>
+                      <div>
+                        <input [(ngModel)]="lessonCreate.euroPerHour" id="money{{i}}" type="number" value="5" min="0" step="0.5"
+                               data-number-to-fixed="2"
+                               data-number-stepfactor="100"/>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn  btn-secondary " data-dismiss="modal" (click)="closeModal()">Κλείσιμο</button>
+              <br>
+              <button (click)="createLesson(day)"  title="Συπληρώστε όλα τα πεδία (Μάθημα, ώρα εναρξης κλπ.)"
+                      [disabled]="checkEmptyField()" type="button" data-dismiss="modal" class="btn btn-primary">Αποθήκευση</button>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--   end of add lesson   -->
+      <!-- Modal cancel -->
+      <div class="modal fade" id="modal{{i}}" role="dialog"
+           aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <b><h5 class="modal-title" id="exampleModalLongTitle">Cancel lessons</h5></b>
+            <div class="modal-body">
+
+                <table style="width: 100%" *ngFor="let lesson of this.lessons; let j = index">
+
+                  <tr *ngIf="lesson.day === week[day.getDay()]">
+                    <td  style="text-align: center; width: 50%">
+                      <p><b>{{lesson.startHour}}:{{lesson.startMinute}} - {{lesson.endHour}}
+                        :{{lesson.endMinute}}</b><br> {{lesson.studentName}}
+                        {{lesson.studentSurname}}  {{lesson.course}}</p></td>
+                      <td>
+                      <button class="btn-sm" style="background-color: red; color: white">Cancel</button>
+                    </td>
+                  </tr>
+
+                </table>
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn  btn-secondary " data-dismiss="modal">Κλείσιμο</button>
+              <br>
+              <button title="Συπληρώστε όλα τα πεδία (Μάθημα, ώρα εναρξης κλπ.)"
+                      type="button" data-dismiss="modal" class="btn btn-primary">Αποθήκευση
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- box-footer -->
   </div>

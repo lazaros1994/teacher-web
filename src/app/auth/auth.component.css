@@ -99,3 +99,6 @@ img {
   margin-right: auto;
 }
 
+input.pw {
+  -webkit-text-security: disc;
+}

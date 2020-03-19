@@ -102,7 +102,7 @@ header {
   position: relative;
   height: fit-content;
   border: 1px solid black;
-  border-radius: 1px;
+  border-radius: 4px;
   background-color: white;
 }
 
@@ -113,13 +113,16 @@ header {
 }
 .box .box-body{
   overflow-y: scroll ;
-  max-height: 100px;
+  max-height: 75px;
   position: relative;
-  padding-top: 10px;
+  /*padding-top: 10px;*/
   padding-bottom: 10px;
+  text-align: center;
+
 }
 
 .box .box-footer{
+  padding-top: 15px;
   margin-right: 30%;
 }
 
@@ -130,10 +133,13 @@ header {
 
   text-align: center;
 }
+.box .box-info{
+  padding-bottom:15px;
 
+}
 .box .day{
 
-  border-radius: 1px;
+  border-radius: 4px;
   padding-top: 10px;
   padding-bottom: 10px;
   background: cornflowerblue;
