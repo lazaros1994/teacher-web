@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
-import {Teacher} from '../models/teacher';
 import {Lesson} from '../models/lesson';
 
 const httpOptions = {

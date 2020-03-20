@@ -1,9 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!--  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">-->
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  <!--  <title>Calendar of Events</title>-->
-  <!--  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
 </head>
 
 <body>
@@ -58,7 +54,7 @@
     <p style="background-color: #8000ff"
        *ngIf="day.getFullYear() === now.getFullYear() && day.getMonth() === now.getMonth() && day.getDate() === now.getDate()"
        class="day">
-      {{i + 1}} {{ day | date:'EEE'}}  (Σήμερα) </p>
+      {{i + 1}} {{ day | date:'EEE'}}</p>
 
     <p style="background-color: lightgray" *ngIf="(day.getFullYear() < now.getFullYear() )|| (day.getFullYear() === now.getFullYear() && day.getMonth() < now.getMonth() ) ||
     ( day.getFullYear() === now.getFullYear() && day.getMonth() === now.getMonth() && day.getDate() < now.getDate()) "
@@ -69,8 +65,9 @@
       <div *ngFor="let lesson of this.lessons; let j = index">
 
         <div class="box-info" *ngIf="lesson.day === week[day.getDay()]">
-          <b>{{lesson.startHour}}:{{lesson.startMinute}} - {{lesson.endHour}}:{{lesson.endMinute}}</b><br> {{lesson.studentName}}
-          {{lesson.studentSurname}}  {{lesson.course}}
+          <b>{{lesson.startHour}}:{{lesson.startMinute}} - {{lesson.endHour}}
+            :{{lesson.endMinute}}</b><br> {{lesson.studentName}}
+          {{lesson.studentSurname}} <p style="font-style: italic">({{lesson.course}})</p>
         </div>
       </div>
     </div>
@@ -79,7 +76,7 @@
         Edit
       </button>
 
-<!--     Modal Choose -->
+      <!--     Modal Choose -->
       <div class="modal fade" id="chooseModal{{i}}" role="dialog"
            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
@@ -91,11 +88,15 @@
               <table style="width: 100%">
 
                 <tr>
-                  <td  style="text-align: center; width: 50%;padding-right: 10%">
-                    <button class="btn-sm" style="background-color: darkseagreen; color: white;" data-toggle="modal" attr.data-target="#addModal{{i}}" data-dismiss="modal">New lesson</button>
+                  <td style="text-align: center; width: 50%;padding-right: 10%">
+                    <button class="btn btn-default" style="background-color: gray; color: white;" data-toggle="modal"
+                            attr.data-target="#addModal{{i}}" data-dismiss="modal">New lesson
+                    </button>
                   </td>
                   <td style="padding-right: 30%">
-                    <button class="btn-sm" style="background-color: red; color: white;" data-toggle="modal" attr.data-target="#modal{{i}}" data-dismiss="modal">Cancel lesson</button>
+                    <button class="btn btn-default" style="background-color: gray; color: white;" data-toggle="modal"
+                            attr.data-target="#modal{{i}}" data-dismiss="modal">Cancel lesson
+                    </button>
                   </td>
                 </tr>
 
@@ -105,20 +106,16 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn  btn-secondary " data-dismiss="modal">Κλείσιμο</button>
-              <br>
-              <button title="Συπληρώστε όλα τα πεδία (Μάθημα, ώρα εναρξης κλπ.)"
-                      type="button" data-dismiss="modal" class="btn btn-primary">Αποθήκευση
-              </button>
             </div>
           </div>
         </div>
       </div>
-<!--     enddddddddddddddddddddddddd of modal choose -->
-<!--  Add lesson modal    -->
-      <div  data-backdrop="static" data-keyboard="false"  class="modal fade" id="addModal{{i}}" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <!--     end of modal choose -->
+      <!--  Add lesson modal    -->
+      <div data-backdrop="static" data-keyboard="false" class="modal fade" id="addModal{{i}}" role="dialog"
+           aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
-        <div  class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <b><h5 class="modal-title" id="">Προσθήκη Μαθήματος</h5></b>
             <div class="modal-body">
@@ -127,8 +124,8 @@
                   <td>
                     <label for="course-form{{i}}">Μάθημα:</label></td>
                   <td>
-                    <form  id="course-form{{i}}" action="/action_page.php" method="get">
-                      <input [(ngModel)]="this.lessonCreate.course" id="course{{i}}" list="browsers" name="browser">
+                    <form id="course-form{{i}}" action="/action_page.php" method="get">
+                      <input [(ngModel)]="this.extraLessonCreate.course" id="course{{i}}" list="browsers" name="browser">
                       <datalist id="browsers">
                         <option value="Μαθηματικά">
                         <option value="Φυσική">
@@ -148,14 +145,14 @@
                     <label for="student-name{{i}}">Όνομα μαθητή:</label>
                   </td>
                   <td>
-                    <input [(ngModel)]="lessonCreate.studentName" type="text" id="student-name{{i}}"></td>
+                    <input [(ngModel)]="extraLessonCreate.studentName" type="text" id="student-name{{i}}"></td>
                 </tr>
                 <tr>
                   <td>
                     <label for="student-surname{{i}}">Επίθετο μαθητή:</label>
                   </td>
                   <td>
-                    <input [(ngModel)]="lessonCreate.studentSurname" type="text" id="student-surname{{i}}">
+                    <input [(ngModel)]="extraLessonCreate.studentSurname" type="text" id="student-surname{{i}}">
                   </td>
                 </tr>
                 <tr>
@@ -182,7 +179,8 @@
                   <td>
                     <div>
                       <div>
-                        <input [(ngModel)]="lessonCreate.euroPerHour" id="money{{i}}" type="number" value="5" min="0" step="0.5"
+                        <input [(ngModel)]="extraLessonCreate.euroPerHour" id="money{{i}}" type="number" value="5" min="0"
+                               step="0.5"
                                data-number-to-fixed="2"
                                data-number-stepfactor="100"/>
                       </div>
@@ -192,15 +190,18 @@
               </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn  btn-secondary " data-dismiss="modal" (click)="closeModal()">Κλείσιμο</button>
+              <button type="button" class="btn  btn-secondary " data-dismiss="modal" (click)="closeModal()">Κλείσιμο
+              </button>
               <br>
-              <button (click)="createLesson(day)"  title="Συπληρώστε όλα τα πεδία (Μάθημα, ώρα εναρξης κλπ.)"
-                      [disabled]="checkEmptyField()" type="button" data-dismiss="modal" class="btn btn-primary">Αποθήκευση</button>
+              <button (click)="createExtraLesson(day.getFullYear() , months[day.getMonth()] , day.getDate())" title="Συπληρώστε όλα τα πεδία (Μάθημα, ώρα εναρξης κλπ.)"
+                      [disabled]="checkEmptyField()" type="button" data-dismiss="modal" class="btn btn-primary">
+                Αποθήκευση
+              </button>
             </div>
           </div>
         </div>
       </div>
-<!--   end of add lesson   -->
+      <!--   end of add lesson   -->
       <!-- Modal cancel -->
       <div class="modal fade" id="modal{{i}}" role="dialog"
            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -210,21 +211,19 @@
             <b><h5 class="modal-title" id="exampleModalLongTitle">Cancel lessons</h5></b>
             <div class="modal-body">
 
-                <table style="width: 100%" *ngFor="let lesson of this.lessons; let j = index">
+              <table style="width: 100%" *ngFor="let lesson of this.lessons; let j = index">
 
-                  <tr *ngIf="lesson.day === week[day.getDay()]">
-                    <td  style="text-align: center; width: 50%">
-                      <p><b>{{lesson.startHour}}:{{lesson.startMinute}} - {{lesson.endHour}}
-                        :{{lesson.endMinute}}</b><br> {{lesson.studentName}}
-                        {{lesson.studentSurname}}  {{lesson.course}}</p></td>
-                      <td>
-                      <button class="btn-sm" style="background-color: red; color: white">Cancel</button>
-                    </td>
-                  </tr>
+                <tr *ngIf="lesson.day === week[day.getDay()]">
+                  <td style="text-align: center; width: 50%">
+                    <p><b>{{lesson.startHour}}:{{lesson.startMinute}} - {{lesson.endHour}}
+                      :{{lesson.endMinute}}</b><br> {{lesson.studentName}}
+                      {{lesson.studentSurname}}  {{lesson.course}}</p></td>
+                  <td>
+                    <button class="btn-sm" style="background-color: red; color: white" (click)="cancelLesson(lesson , day)">Cancel</button>
+                  </td>
+                </tr>
 
-                </table>
-
-
+              </table>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn  btn-secondary " data-dismiss="modal">Κλείσιμο</button>
