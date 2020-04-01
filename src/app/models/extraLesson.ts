@@ -6,7 +6,7 @@ export class ExtraLesson {
   studentName: string;
   studentSurname: string;
   year: number;
-  month: string;
+  month: number;
   day: number;
   startHour: string;
   startMinute: string;

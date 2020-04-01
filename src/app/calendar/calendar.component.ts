@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import {HomeService} from '../home/home.service';
 import {Teacher} from '../models/teacher';
-import {Lesson} from '../models/lesson';
+import {Lesson, LessonWithCancelled} from '../models/lesson';
 import {ExtraLesson} from '../models/extraLesson';
 import {CalendarService} from './calendar.service';
 import {CancelledLesson} from '../models/cancelledLesson';
@@ -26,10 +25,14 @@ export class CalendarComponent implements OnInit {
   months: string[] = [];
   teacher: Teacher;
   lessons: Lesson[] = [];
+  extraLessons: ExtraLesson[] = [];
   extraLessonCreate: ExtraLesson = new ExtraLesson();
   startTime: string;
   endTime: string;
   cancelledLesson: CancelledLesson = new CancelledLesson();
+  allCancelledLessons: CancelledLesson[] = [];
+  flag: number;
+  weeklyAndCancelledLessons: LessonWithCancelled[] = [];
 
   constructor(private router: Router,
               private homeService: HomeService,
@@ -37,19 +40,25 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.flag = 0;
     this.teacher = JSON.parse(localStorage.getItem('teacher'));
     this.currentDay = this.now.getDate();
     this.currentMonth = this.now.getUTCMonth();
     this.currentYear = this.now.getFullYear();
     this.week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    this.months = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
     this.currentMonthDays = new Date(this.currentYear, this.currentMonth + 1).getUTCDate();
     for (let i = 0; i < this.currentMonthDays; i++) {
       this.allDays[i] = new Date(this.currentYear, this.currentMonth, i + 1);
     }
     this.selectedDate = this.now;
     this.getLessons();
+    this.getAllExtraLessons();
+    this.getAllCancelledLessons();
   }
+
 
   nextMonth(): void {
     this.allDays = [];
@@ -58,7 +67,11 @@ export class CalendarComponent implements OnInit {
     for (let i = 0; i < this.currentMonthDays; i++) {
       this.allDays[i] = new Date(this.currentYear, this.currentMonth, i + 1);
     }
+
     this.selectedDate = new Date(this.currentYear, this.currentMonth);
+    this.getLessons();
+    this.getAllExtraLessons();
+    this.getAllCancelledLessons();
   }
 
   previousMonth(): void {
@@ -69,15 +82,29 @@ export class CalendarComponent implements OnInit {
       this.allDays[i] = new Date(this.currentYear, this.currentMonth, i + 1);
     }
     this.selectedDate = new Date(this.currentYear, this.currentMonth);
+    this.getLessons();
+    this.getAllExtraLessons();
+    this.getAllCancelledLessons();
   }
 
   getLessons(): void {
     this.homeService.getLessons(this.teacher).subscribe(data => {
       this.lessons = data;
+      let i = 0;
+      this.lessons.forEach(lesson => {
+        this.weeklyAndCancelledLessons[i] = new LessonWithCancelled();
+        this.weeklyAndCancelledLessons[i].lesson = lesson;
+        for (let j = 0; j <= this.currentMonthDays; j++) {
+          this.weeklyAndCancelledLessons[i].daysCancelled[j] = 0;
+        }
+        i++;
+      });
     }, errorResponse => {
       alert(errorResponse);
     });
   }
+
+
 
   createExtraLesson(year, month, day): void {
     this.extraLessonCreate.teacher = this.teacher;
@@ -96,6 +123,7 @@ export class CalendarComponent implements OnInit {
       this.startTime = '';
       this.endTime = '';
       this.getLessons();
+      this.getAllExtraLessons();
     }, errorResponse => {
       alert(errorResponse);
     });
@@ -109,9 +137,11 @@ export class CalendarComponent implements OnInit {
   }
 
   checkEmptyField(): boolean {
-    if (this.startTime === undefined || this.endTime === undefined || this.extraLessonCreate.course === undefined || this.extraLessonCreate.studentName === undefined ||
+    if (this.startTime === undefined || this.endTime === undefined || this.extraLessonCreate.course === undefined
+      || this.extraLessonCreate.studentName === undefined ||
       this.extraLessonCreate.studentSurname === undefined
-      || this.extraLessonCreate.euroPerHour === undefined || this.startTime === '' || this.endTime === '' || this.extraLessonCreate.course === '' || this.extraLessonCreate.studentName === '' ||
+      || this.extraLessonCreate.euroPerHour === undefined || this.startTime === ''
+      || this.endTime === '' || this.extraLessonCreate.course === '' || this.extraLessonCreate.studentName === '' ||
       this.extraLessonCreate.studentSurname === ''
       || this.extraLessonCreate.euroPerHour === null) {
       return true;
@@ -122,13 +152,9 @@ export class CalendarComponent implements OnInit {
   }
 
   cancelLesson(lesson, day): void {
-    console.log(lesson);
-    console.log(day.getFullYear());
-    console.log(this.months[day.getMonth()]);
-    console.log(day.getDate());
     this.cancelledLesson.lesson = lesson;
     this.cancelledLesson.year = day.getFullYear();
-    this.cancelledLesson.month = this.months[day.getMonth()];
+    this.cancelledLesson.month = day.getMonth();
     this.cancelledLesson.day = day.getDate();
     this.calendarService.createCancelledLesson(this.cancelledLesson).subscribe(successResponse => {
       alert(successResponse);
@@ -136,10 +162,50 @@ export class CalendarComponent implements OnInit {
       this.startTime = '';
       this.endTime = '';
       this.getLessons();
+      this.getAllCancelledLessons();
+      this.getAllExtraLessons();
     }, errorResponse => {
       alert(errorResponse);
     });
 
+  }
+
+  deleteExtraLesson(extraLesson): void {
+    this.calendarService.deleteExtraLesson(extraLesson).subscribe(data => {
+      const alertMessage = 'Extra Lesson' + data + 'deleted';
+      alert(alertMessage);
+      this.getLessons();
+      this.getAllCancelledLessons();
+      this.getAllExtraLessons();
+    }, errorResponse => {
+      alert(errorResponse);
+    });
+
+  }
+
+  getAllExtraLessons(): void {
+    this.calendarService.getExtraLessons(this.teacher).subscribe(data => {
+      this.extraLessons = data;
+    }, errorResponse => {
+      alert(errorResponse);
+    });
+  }
+
+  getAllCancelledLessons(): void {
+    this.calendarService.getCancelledLessons(this.teacher).subscribe(data => {
+      this.allCancelledLessons = data;
+      let i = 0;
+      this.allCancelledLessons.forEach(cl => {
+        this.weeklyAndCancelledLessons.forEach(wl => {
+          if (wl.lesson.id === cl.lesson.id && cl.year === this.selectedDate.getFullYear() && cl.month === this.selectedDate.getMonth()) {
+            wl.daysCancelled[cl.day] = 1;
+            i++;
+          }
+        });
+      });
+    }, errorResponse => {
+      alert(errorResponse);
+    });
   }
 
 }

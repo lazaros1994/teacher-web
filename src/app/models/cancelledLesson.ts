@@ -4,6 +4,6 @@ export class CancelledLesson {
   id: number;
   lesson: Lesson;
   year: number;
-  month: string;
+  month: number;
   day: number;
 }
