@@ -22,6 +22,7 @@ export class CalendarService {
   private getAllExtraLessonsUrl = 'extralesson/getAll';
   private deleteExtraLessonUrl = 'extralesson/delete';
   private getAllCancelledUrl = 'lesson/getAllCancelled';
+  private deleteCancelledLessonUrl = 'lesson/deleteCancelled';
 
   public createExtraLesson(extraLesson) {
     console.log('mpike extra');
@@ -44,6 +45,13 @@ export class CalendarService {
     const params = new HttpParams()
       .set('extraLessonString', JSON.stringify(extraLesson));
     return this.http.delete<ExtraLesson>(this.deleteExtraLessonUrl, {params});
+  }
+
+  public deleteCancelledLesson(lesson) {
+    const params = new HttpParams()
+      .set('lessonString', JSON.stringify(lesson));
+
+    return this.http.delete<ExtraLesson>(this.deleteCancelledLessonUrl, {params});
   }
 
   public getCancelledLessons(teacher) {

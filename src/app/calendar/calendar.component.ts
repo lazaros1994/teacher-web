@@ -15,7 +15,6 @@ import {CancelledLesson} from '../models/cancelledLesson';
 export class CalendarComponent implements OnInit {
 
   public now: Date = new Date();
-  currentDay: number;
   currentMonth: number;
   currentYear: number;
   currentMonthDays: number;
@@ -31,8 +30,8 @@ export class CalendarComponent implements OnInit {
   endTime: string;
   cancelledLesson: CancelledLesson = new CancelledLesson();
   allCancelledLessons: CancelledLesson[] = [];
-  flag: number;
   weeklyAndCancelledLessons: LessonWithCancelled[] = [];
+  cancelledLessonToBeDeleted: CancelledLesson = new CancelledLesson();
 
   constructor(private router: Router,
               private homeService: HomeService,
@@ -40,10 +39,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.flag = 0;
     this.teacher = JSON.parse(localStorage.getItem('teacher'));
-    this.currentDay = this.now.getDate();
     this.currentMonth = this.now.getUTCMonth();
     this.currentYear = this.now.getFullYear();
     this.week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -103,7 +99,6 @@ export class CalendarComponent implements OnInit {
       alert(errorResponse);
     });
   }
-
 
 
   createExtraLesson(year, month, day): void {
@@ -180,6 +175,31 @@ export class CalendarComponent implements OnInit {
     }, errorResponse => {
       alert(errorResponse);
     });
+  }
+
+  deleteCancelledLesson(lesson, day): void {
+    console.log('day is ' + day);
+    console.log('current is ' + this.selectedDate);
+    console.log(this.allCancelledLessons);
+    this.allCancelledLessons.forEach(cl => {
+      console.log(cl.lesson.id);
+      console.log(cl.id);
+      if (lesson.id === cl.lesson.id && cl.year === day.getFullYear() &&
+        cl.month === day.getMonth() && cl.day === day.getDate()) {
+        this.cancelledLessonToBeDeleted = cl;
+
+        this.calendarService.deleteCancelledLesson(this.cancelledLessonToBeDeleted).subscribe(data => {
+          const alertMessage = 'Cancelled Lesson' + data + 'deleted';
+          alert(alertMessage);
+          this.getLessons();
+          this.getAllCancelledLessons();
+          this.getAllExtraLessons();
+        }, errorResponse => {
+          alert(errorResponse);
+        });
+      }
+    });
+
 
   }
 
@@ -194,12 +214,11 @@ export class CalendarComponent implements OnInit {
   getAllCancelledLessons(): void {
     this.calendarService.getCancelledLessons(this.teacher).subscribe(data => {
       this.allCancelledLessons = data;
-      let i = 0;
       this.allCancelledLessons.forEach(cl => {
         this.weeklyAndCancelledLessons.forEach(wl => {
           if (wl.lesson.id === cl.lesson.id && cl.year === this.selectedDate.getFullYear() && cl.month === this.selectedDate.getMonth()) {
             wl.daysCancelled[cl.day] = 1;
-            i++;
+
           }
         });
       });

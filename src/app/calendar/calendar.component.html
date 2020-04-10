@@ -6,7 +6,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="background-color: black">
   <!-- Navbar brand -->
-  <a class="navbar-brand" href="#"><img src="../../assets/images/logo.png" width="30" height="30"></a>
+  <a routerLink="/home" class="navbar-brand" href="#"><img src="../../assets/images/logo.png" width="30" height="30"></a>
   <!-- Collapse button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
           aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -128,12 +128,12 @@
            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
-            <b><h5 class="modal-title" id="">Προσθήκη Μαθήματος</h5></b>
+            <b><h5 class="modal-title" id="">Add Lesson</h5></b>
             <div class="modal-body">
               <table>
                 <tr>
                   <td>
-                    <label for="course-form{{i}}">Μάθημα:</label></td>
+                    <label for="course-form{{i}}">Lesson:</label></td>
                   <td>
                     <form id="course-form{{i}}" action="/action_page.php" method="get">
                       <input [(ngModel)]="this.extraLessonCreate.course" id="course{{i}}" list="browsers"
@@ -154,14 +154,14 @@
                 </tr>
                 <tr>
                   <td>
-                    <label for="student-name{{i}}">Όνομα μαθητή:</label>
+                    <label for="student-name{{i}}">Student name:</label>
                   </td>
                   <td>
                     <input [(ngModel)]="extraLessonCreate.studentName" type="text" id="student-name{{i}}"></td>
                 </tr>
                 <tr>
                   <td>
-                    <label for="student-surname{{i}}">Επίθετο μαθητή:</label>
+                    <label for="student-surname{{i}}">Student Surname:</label>
                   </td>
                   <td>
                     <input [(ngModel)]="extraLessonCreate.studentSurname" type="text" id="student-surname{{i}}">
@@ -169,7 +169,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <label for="start-time{{i}}">Ώρα έναρξης:</label>
+                    <label for="start-time{{i}}">Start time:</label>
                   </td>
                   <td>
                     <input [(ngModel)]="startTime" type="time" id="start-time{{i}}" name="appt"
@@ -177,7 +177,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <label for="end-time{{i}}">Ώρα λήξης:</label>
+                    <label for="end-time{{i}}">Ending time:</label>
                   </td>
                   <td>
                     <input [(ngModel)]="endTime" type="time" id="end-time{{i}}" name="appt"
@@ -186,7 +186,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <span class="input-group-addon">Ευρώ(€) ανά ώρα</span>
+                    <span class="input-group-addon">Euro(€) per hour:</span>
                   </td>
                   <td>
                     <div>
@@ -203,13 +203,13 @@
               </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn  btn-secondary " data-dismiss="modal" (click)="closeModal()">Κλείσιμο
+              <button type="button" class="btn  btn-secondary " data-dismiss="modal" (click)="closeModal()">Close
               </button>
               <br>
               <button (click)="createExtraLesson(day.getFullYear() , day.getMonth() , day.getDate())"
                       title="Συπληρώστε όλα τα πεδία (Μάθημα, ώρα εναρξης κλπ.)"
                       [disabled]="checkEmptyField()" type="button" data-dismiss="modal" class="btn btn-primary">
-                Αποθήκευση
+                Save
               </button>
             </div>
           </div>
@@ -244,7 +244,7 @@
                       {{wl.lesson.studentSurname}}  {{wl.lesson.course}}</p></td>
                   <td>
                     <button class="btn-sm" style="background-color: grey; color: white"
-                            (click)="cancelLesson(wl.lesson , day)">undo
+                            (click)="deleteCancelledLesson(wl.lesson ,day)">undo
                     </button>
                   </td>
                 </tr>
@@ -268,7 +268,7 @@
               </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn  btn-secondary " data-dismiss="modal">Κλείσιμο</button>
+              <button type="button" class="btn  btn-secondary " data-dismiss="modal">Close</button>
               <br>
             </div>
           </div>

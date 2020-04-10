@@ -76,7 +76,16 @@ export class HomeComponent implements OnInit {
     } else {
       return false;
     }
+  }
 
+  deleteLesson(lesson): void {
+    this.homeService.deleteLesson(lesson).subscribe(data => {
+      const alertMessage = 'Lesson' + data + 'deleted';
+      alert(alertMessage);
+      this.getLessons();
+    }, errorResponse => {
+      alert(errorResponse);
+    });
   }
 }
 
