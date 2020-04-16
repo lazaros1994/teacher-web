@@ -60,7 +60,6 @@ export class HomeComponent implements OnInit {
   getLessons(): void {
     this.homeService.getLessons(this.teacher).subscribe(data => {
       this.lessons = data;
-      console.log(this.lessons);
     }, errorResponse => {
       alert(errorResponse);
     });

@@ -55,9 +55,9 @@
     <div class="row">
       <div class="col-md-6">
         <div class="profile-head">
-          <h5>
+          <h4>
            {{this.teacher.name}} {{this.teacher.surname}}
-          </h5>
+          </h4>
           <h6>
             Teacher
           </h6>
@@ -83,7 +83,7 @@
                 <label>Hours this Month</label>
               </div>
               <div class="col-md-6">
-                <p>45</p>
+                <p>{{hoursAndEuroThisMonth[0]}}</p>
               </div>
             </div>
             <div class="row">
@@ -91,7 +91,7 @@
                 <label>Euro this Month</label>
               </div>
               <div class="col-md-6">
-                <p>800</p>
+                <p>{{hoursAndEuroThisMonth[1]}}</p>
               </div>
             </div>
             <div class="row">
@@ -99,7 +99,7 @@
                 <label>Average Euro per Hour</label>
               </div>
               <div class="col-md-6">
-                <p>10</p>
+                <p>{{hoursAndEuroThisMonth[2]}}</p>
               </div>
             </div>
             <div class="row">
@@ -107,7 +107,7 @@
                 <label>Cancelled lessons this month</label>
               </div>
               <div class="col-md-6">
-                <p>7</p>
+                <p>{{cancelledLessonThisMonthCounter}}</p>
               </div>
             </div>
             <div class="row">
@@ -115,7 +115,7 @@
                 <label>Extra lessons this Month</label>
               </div>
               <div class="col-md-6">
-                <p>7</p>
+                <p>{{extraLessonThisMonthCounter}}</p>
               </div>
             </div>
           </div>
@@ -145,13 +145,80 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-6">
-                <button class="btn-sm">Edit Personal Info</button>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Edit Personal Info
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">New Name</label>
+                          <input type="text" [(ngModel)]="newName" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputName1" aria-describedby="emailHelp" placeholder="Enter new Name">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">New Surname</label>
+                          <input type="text" [(ngModel)]="newSurname" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputPassword1" placeholder="Enter New Surname">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">New Email</label>
+                          <input type="email" [(ngModel)]="newEmail" [ngModelOptions]="{standalone: true}" class="form-control" id="exampleInputEmail1" placeholder="Enter New Email">
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePersonalInfo()" [disabled]="checkPersonalInfo()">Save changes</button>
+                    </div>
+                  </div>
+                </div>
               </div>
+
             </div>
             <div class="row" style="margin-top: 10px;">
-              <div class="col-sm-6">
-                <button class="btn-sm">Change Password</button>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#example2Modal">
+                Edit Password
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="example2Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="example2ModalLabel">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">New Password</label>
+                          <input type="password" [(ngModel)]="newPassword" [ngModelOptions]="{standalone: true}" class="form-control" id="password1" aria-describedby="emailHelp" placeholder="Enter new Password">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Confirm New Surname</label>
+                          <input type="password" [(ngModel)]="confirmNewPassword" [ngModelOptions]="{standalone: true}" class="form-control" id="password2" placeholder="Confirm New Password">
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePassword()" [disabled]="checkPassword()">Save changes</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

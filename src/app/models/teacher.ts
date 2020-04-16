@@ -1,7 +1,7 @@
 export class Teacher {
   id: number;
   name: string;
-  surname: number;
-  email: number;
-  password: number;
+  surname: string;
+  email: string;
+  password: string;
 }

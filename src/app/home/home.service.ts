@@ -28,7 +28,6 @@ export class HomeService {
     const params = new HttpParams()
       .set('teacherString', JSON.stringify(teacher));
 
-    console.log(teacher);
     return this.http.get<Lesson[]>(this.getLessonsUrl, {params});
   }
 
