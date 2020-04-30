@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   newEmail: string;
   newPassword: string;
   confirmNewPassword: string;
+  alert: number;
 
   constructor(private router: Router,
               private profileService: ProfileService,
@@ -36,6 +37,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.teacher = JSON.parse(localStorage.getItem('teacher'));
+    if (this.teacher === null) {
+      this.router.navigate(['/']);
+    }
     this.currentMonth = this.now.getUTCMonth();
     this.currentYear = this.now.getFullYear();
     this.extraLessonThisMonthCounter = 0;
@@ -46,11 +50,13 @@ export class ProfileComponent implements OnInit {
     this.newName = this.teacher.name;
     this.newSurname = this.teacher.surname;
     this.newEmail = this.teacher.email;
+    this.alert = 0;
   }
 
   getHoursThisMonth(): void {
     this.profileService.getHoursAndEuroThisMonth(this.teacher).subscribe(data => {
       this.hoursAndEuroThisMonth = data;
+
     }, errorResponse => {
       alert(errorResponse);
     });
@@ -108,6 +114,7 @@ export class ProfileComponent implements OnInit {
     this.teacher.email = this.newEmail;
     this.profileService.updatePersonalInfo(this.teacher).subscribe(data => {
       this.teacher = data;
+      this.alert = 1;
       localStorage.setItem('teacher', JSON.stringify(this.teacher));
     }, errorResponse => {
       alert(errorResponse);
@@ -119,11 +126,15 @@ export class ProfileComponent implements OnInit {
     this.teacher.password = this.newPassword;
     this.profileService.updatePersonalInfo(this.teacher).subscribe(data => {
       this.teacher = data;
+      this.alert = 2;
       localStorage.setItem('teacher', JSON.stringify(this.teacher));
     }, errorResponse => {
       alert(errorResponse);
     });
+  }
 
+  logout(): void {
+    localStorage.clear();
   }
 
 }

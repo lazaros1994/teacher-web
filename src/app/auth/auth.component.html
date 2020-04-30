@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<div class="col-sm-10 col-sm-push-1 col-md-6 col-md-push-3 col-lg-6 col-lg-push-3">
+<div class="col-sm-10 col-sm-push-1 col-md-6 col-md-push-3 col-lg-6 col-lg-push-3 container">
   <div class="myTitle">
     <img src="../../assets/images/logo.png" width="150" height="150">
+  </div>
+  <div *ngIf="this.alert===1" class="alert alert-success myAlert container">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Account created successfully.
+  </div>
+  <div *ngIf="this.alert===2" class="alert alert-danger  myAlert container">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    There is already an account using this email.
+  </div>
+  <div *ngIf="this.alert===3" class="alert alert-danger  myAlert container">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    Wrong Email or Password.
   </div>
   <div class="card-group">
     <div class="card ">
@@ -19,18 +29,54 @@
         </div>
         <form>
           <div class="form-group">
-            <input type="email" id="loginEmail"  [(ngModel)]="logInEmail" [ngModelOptions]="{standalone: true}" class="form-control"
+            <input type="email" id="loginEmail" [(ngModel)]="logInEmail" [ngModelOptions]="{standalone: true}"
+                   class="form-control"
                    placeholder="Email Address">
           </div>
           <div class="form-group">
             <input type="password" id="loginPassword" [(ngModel)]="logInPassword" [ngModelOptions]="{standalone: true}"
                    class="form-control" placeholder="Password">
             <a href="#" class="pull-xs-right">
-              <small>Forgot?</small>
             </a>
             <div class="clearfix"></div>
           </div>
+
+
           <div class="center">
+
+            <button type="button" style="font-size: 10px;border-radius: 3px" class="btn-outline-secondary float-left"
+                    data-toggle="modal" data-target="#exampleModal">
+              Forgot Password
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade float-right" id="exampleModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Password Reminder</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="input-container">
+                      <i class="fa fa-envelope-o icon"></i>
+                      <input class="form-control" type="text" [(ngModel)]="emailRemind" placeholder="Enter your email"
+                             name="email">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                      Close
+                    </button>
+                    <button type="button" class="btn btn-primary" (click)="forgotPassword()">Send Email
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <button type="submit" class="btn btn-primary btn-rounded right" (click)="logIn()">
               Connect
             </button>
@@ -41,36 +87,73 @@
     <div class="card">
       <div class="card-block center">
         <h3 class="m-b-0"><span class="icon-text">Create Account</span></h3>
-        <form  autocomplete = "off">
+        <form autocomplete="off">
           <div class="form-group">
             <input type="text" [(ngModel)]="name" [ngModelOptions]="{standalone: true}" class="form-control"
+                   #nameref="ngModel"
                    placeholder="Name">
+            <div *ngIf="(this.name === '') ||(nameref.touched && this.name === undefined)" class="alert alert-danger">
+              Empty Name
+            </div>
           </div>
 
           <div class="form-group">
             <input type="text" [(ngModel)]="surname" [ngModelOptions]="{standalone: true}" class="form-control"
+                   #surnameref="ngModel"
                    placeholder="Surname">
+            <div *ngIf="(this.surname === '') ||(surnameref.touched && this.surname === undefined)"
+                 class="alert alert-danger">
+              Empty Surname
+            </div>
           </div>
           <div class="form-group">
-            <input type="email" name="email"  id="registerEmail" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" class="form-control"
+            <input type="text" [(ngModel)]="email" class="form-control"
+                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email" name="email" #emailref="ngModel"
                    placeholder="Email">
+            <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class="alert alert-danger">
+              <div [hidden]="!emailref.errors?.pattern">
+                Invalid Email
+              </div>
+            </div>
           </div>
           <div class="form-group">
-            <input type="password" autocomplete="new-password" id="registerPassword" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control"
+            <input type="password" autocomplete="new-password" id="registerPassword" [(ngModel)]="password"
+                   #passwordref="ngModel"
+                   [ngModelOptions]="{standalone: true}" class="form-control"
                    placeholder="Password">
+            <div *ngIf="(this.password === '') ||(passwordref.touched && this.password === undefined)"
+                 class="alert alert-danger">
+              Empty Password
+            </div>
+
           </div>
           <div class="form-group">
-            <input type="password"  [(ngModel)]="password2" [ngModelOptions]="{standalone: true}" class="form-control"
+            <input type="password" [(ngModel)]="password2" [ngModelOptions]="{standalone: true}" class="form-control"
+                   #passwordref2="ngModel"
                    placeholder="Confirm Password">
+            <div *ngIf="(this.password2 === '') ||(passwordref2.touched && this.password2 === undefined)"
+                 class="alert alert-danger">
+              Empty Password
+            </div>
+            <div *ngIf="(passwordref2.touched && this.password2 !=  this.password)" class="alert alert-danger">
+              Confirm Password error (incorrect value)
+            </div>
+
           </div>
-          <button  type="submit" [disabled]="checkPassword()" class="btn btn-primary btn-rounded" (click)="createTeacher()">
+          <button type="submit" style="margin-bottom: 10px"
+                  [disabled]="checkPassword() || checkEmptyField() || emailref.errors?.pattern"
+                  class="btn btn-primary btn-rounded float-right"
+                  (click)="createTeacher()">
             Register
           </button>
         </form>
       </div>
     </div>
+
   </div>
+
 </div>
+
 </body>
 </html>
 

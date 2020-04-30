@@ -30,12 +30,32 @@
     </ul>
     <!-- Links -->
     <form class="form-inline">
-      <a class="dropdown-item" href="#" style="color: grey;">Log Out</a>
+      <a class="dropdown-item" href="#"(click)="logout()" style="color: grey;">Log Out</a>
     </form>
   </div>
   <!-- Collapsible content -->
 </nav>
 
+<div *ngIf="this.alert===1" class="alert alert-success myAlert container">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Success!</strong> Extra lesson created successfully.
+</div>
+<div *ngIf="this.alert===2" class="alert alert-danger myAlert container">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Oops!</strong> These hours are not available.
+</div>
+<div *ngIf="this.alert===3" class="alert alert-success myAlert container">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Success!</strong> Lesson got cancelled successfully.
+</div>
+<div *ngIf="this.alert===4" class="alert alert-success myAlert container">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Success!</strong> Extra lesson deleted successfully.
+</div>
+<div *ngIf="this.alert===5" class="alert alert-success myAlert container">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Success!</strong> Undo cancel lesson successfully.
+</div>
 
 <div class="text-center">
   <h2 class="month-header">{{ selectedDate | date:'yyyy-MMMM'}}</h2>
@@ -233,7 +253,7 @@
                       {{wl.lesson.studentSurname}}  {{wl.lesson.course}}</p></td>
                   <td>
                     <button class="btn-sm" style="background-color: red; color: white"
-                            (click)="cancelLesson(wl.lesson , day)">Cancel
+                            (click)="cancelLesson(wl.lesson , day)" data-dismiss="modal">Cancel
                     </button>
                   </td>
                 </tr>
@@ -244,7 +264,7 @@
                       {{wl.lesson.studentSurname}}  {{wl.lesson.course}}</p></td>
                   <td>
                     <button class="btn-sm" style="background-color: grey; color: white"
-                            (click)="deleteCancelledLesson(wl.lesson ,day)">undo
+                            (click)="deleteCancelledLesson(wl.lesson ,day)" data-dismiss="modal">undo
                     </button>
                   </td>
                 </tr>
@@ -261,7 +281,7 @@
                       {{extraLesson.studentSurname}}  {{extraLesson.course}}</p></td>
                   <td>
                     <button class="btn-sm" style="background-color: red; color: white"
-                            (click)="deleteExtraLesson(extraLesson)">Cancel
+                            (click)="deleteExtraLesson(extraLesson)" data-dismiss="modal">Cancel
                     </button>
                   </td>
                 </tr>

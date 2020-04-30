@@ -1,7 +1,7 @@
 html,
 body {
-  background: rgb(218,222,226);
-  background: linear-gradient(90deg, rgba(218,222,226,1) 37%, rgba(35,138,159,1) 100%, rgba(27,17,103,1) 100%, rgba(0,0,0,1) 100%, rgba(2,0,36,1) 100%, rgba(27,72,153,1) 100%, rgba(0,212,255,1) 100%, rgba(0,0,0,1) 100%);
+  background: rgb(218, 222, 226);
+  background: linear-gradient(90deg, rgba(218, 222, 226, 1) 37%, rgba(35, 138, 159, 1) 100%, rgba(27, 17, 103, 1) 100%, rgba(0, 0, 0, 1) 100%, rgba(2, 0, 36, 1) 100%, rgba(27, 72, 153, 1) 100%, rgba(0, 212, 255, 1) 100%, rgba(0, 0, 0, 1) 100%);
   height: 100vh;
   /*width: 100vh;*/
   overflow: auto;
@@ -15,7 +15,10 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
 }
-body{margin-top:20px;}
+
+body {
+  margin-top: 20px;
+}
 
 .card {
   top: 50px;
@@ -30,7 +33,7 @@ body{margin-top:20px;}
 }
 
 .card {
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px darkcyan;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px darkcyan;
   /*box-shadow: 0 2px 3px rgba(0,0,0,.05);*/
 }
 
@@ -42,7 +45,7 @@ body{margin-top:20px;}
 }
 
 @media (min-width: 544px) {
-  .card-group .card+.card {
+  .card-group .card + .card {
     margin-left: 0;
     border-left: 0;
   }
@@ -60,7 +63,7 @@ body{margin-top:20px;}
   height: 100%;
 }
 
-@media (min-width: 544px){
+@media (min-width: 544px) {
   .card-group {
     display: table;
     width: 100%;
@@ -75,8 +78,8 @@ body{margin-top:20px;}
   }
 }
 
-.card>.card-block>:last-child, .card>:last-child {
-  margin-bottom: 0!important;
+.card > .card-block > :last-child, .card > :last-child {
+  margin-bottom: 0 !important;
 }
 
 .card-block {
@@ -86,11 +89,13 @@ body{margin-top:20px;}
 .center {
   text-align: center;
 }
+
 .m-a-2 {
-  margin: 1.5rem!important;
+  margin: 1.5rem !important;
 }
+
 .text-primary {
-  color: #EF5350!important;
+  color: #EF5350 !important;
 }
 
 img {
@@ -101,4 +106,60 @@ img {
 
 input.pw {
   -webkit-text-security: disc;
+}
+
+/** {box-sizing: border-box;}*/
+
+/* Style the input container */
+.input-container {
+  display: flex;
+  width: 60%;
+  margin-bottom: 15px;
+}
+
+/* Style the form icons */
+.icon {
+  padding: 10px;
+  background: dodgerblue;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+/* Style the input fields */
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border-radius: 2px;
+}
+
+.input-field:focus {
+  border: 2px solid dodgerblue;
+}
+
+/*Set a style for the submit button*/
+.btn {
+  background-color: dodgerblue;
+  color: white;
+  /*padding: 15px 20px;*/
+  border: none;
+  cursor: pointer;
+  /*width: 100%;*/
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+button:disabled,
+button[disabled] {
+  cursor: not-allowed;
+}
+
+.myAlert {
+  top: 0;
+  position: fixed;
+  z-index: 999;
 }

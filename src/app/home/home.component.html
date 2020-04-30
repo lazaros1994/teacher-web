@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!--  <meta charset="utf-8">-->
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
-<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">-->
-<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
-<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
-<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
+  <!--  <meta charset="utf-8">-->
+  <!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
+  <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">-->
+  <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+  <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+  <!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
 </head>
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="background-color: black">
   <!-- Navbar brand -->
-  <a routerLink="/home" class="navbar-brand" href="#"><img src="../../assets/images/logo.png" width="30" height="30"></a>
+  <a routerLink="/home" class="navbar-brand" href="#"><img src="../../assets/images/logo.png" width="30"
+                                                           height="30"></a>
   <!-- Collapse button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
           aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,22 +37,35 @@
     </ul>
     <!-- Links -->
     <form class="form-inline">
-      <a class="dropdown-item" href="#" style="color: grey;">Log Out</a>
+      <a class="dropdown-item" href="#" (click)="logout()" style="color: grey;">Log Out</a>
     </form>
   </div>
   <!-- Collapsible content -->
 </nav>
+<div *ngIf="this.alert === 1" class="alert alert-success  myAlert container">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Success!</strong> Lesson created successfully.
+</div>
+<div *ngIf="this.alert === 2" class="alert alert-success  myAlert container">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Success!</strong> Lesson deleted successfully.
+</div>
+<div *ngIf="this.alert === 3" class="alert alert-danger  myAlert container">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Oops!</strong> These hours are not available.
+</div>
 
 <div class="cards">
-  <div  class="box"  *ngFor="let day of this.week; let i = index">
+  <div class="box" *ngFor="let day of this.week; let i = index">
 
     <p class="day">{{day}}</p>
 
-    <div class="box-body" >
-      <div  *ngFor="let lesson of this.lessons">
+    <div class="box-body">
+      <div *ngFor="let lesson of this.lessons">
 
-        <p *ngIf="lesson.day == day"><b>{{lesson.startHour}}:{{lesson.startMinute}} - {{lesson.endHour}}:{{lesson.endMinute}}</b><br> {{lesson.studentName}}
-                {{lesson.studentSurname}} - {{lesson.course}} ({{lesson.euroPerHour}}€/hour)</p>
+        <p *ngIf="lesson.day == day"><b>{{lesson.startHour}}:{{lesson.startMinute}} - {{lesson.endHour}}
+          :{{lesson.endMinute}}</b><br> {{lesson.studentName}}
+          {{lesson.studentSurname}} - {{lesson.course}} ({{lesson.euroPerHour}}€/hour)</p>
 
       </div>
     </div>
@@ -91,10 +105,10 @@
 
 
       <!-- Modal -->
-      <div  data-backdrop="static" data-keyboard="false"  class="modal fade" id="addModal{{i}}" role="dialog"
+      <div data-backdrop="static" data-keyboard="false" class="modal fade" id="addModal{{i}}" role="dialog"
            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
-        <div  class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <b><h5 class="modal-title" id="exampleModalLongTitle">Add Lesson</h5></b>
             <div class="modal-body">
@@ -103,7 +117,7 @@
                   <td>
                     <label for="course-form{{day}}">Lesson:</label></td>
                   <td>
-                    <form  id="course-form{{day}}" action="/action_page.php" method="get">
+                    <form id="course-form{{day}}" action="/action_page.php" method="get">
                       <input [(ngModel)]="this.lessonCreate.course" id="course{{day}}" list="browsers" name="browser">
                       <datalist id="browsers">
                         <option value="Μαθηματικά">
@@ -158,7 +172,8 @@
                   <td>
                     <div>
                       <div>
-                        <input [(ngModel)]="lessonCreate.euroPerHour" id="money{{day}}" type="number" value="5" min="0" step="0.5"
+                        <input [(ngModel)]="lessonCreate.euroPerHour" id="money{{day}}" type="number" value="5" min="0"
+                               step="0.5"
                                data-number-to-fixed="2"
                                data-number-stepfactor="100"/>
                       </div>
@@ -168,10 +183,12 @@
               </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn  btn-secondary " data-dismiss="modal" (click)="closeModal()">Close</button>
+              <button type="button" class="btn  btn-secondary " data-dismiss="modal" (click)="closeModal()">Close
+              </button>
               <br>
-              <button (click)="createLesson(day)"  title="Συπληρώστε όλα τα πεδία (Μάθημα, ώρα εναρξης κλπ.)"
-                        [disabled]="checkEmptyField()" type="button" data-dismiss="modal" class="btn btn-primary">Save</button>
+              <button (click)="createLesson(day)" title="Συπληρώστε όλα τα πεδία (Μάθημα, ώρα εναρξης κλπ.)"
+                      [disabled]="checkEmptyField()" type="button" data-dismiss="modal" class="btn btn-primary">Save
+              </button>
             </div>
           </div>
         </div>
@@ -194,7 +211,7 @@
                       {{lesson.studentSurname}}  {{lesson.course}}</p></td>
                   <td>
                     <button class="btn-sm" style="background-color: red; color: white"
-                            (click)="deleteLesson(lesson)">Delete
+                            (click)="deleteLesson(lesson)" type="button" data-dismiss="modal"> Delete
                     </button>
                   </td>
                 </tr>

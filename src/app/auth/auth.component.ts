@@ -9,8 +9,6 @@ import {Teacher} from '../models/teacher';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-
-  age: number;
   name: string;
   surname: string;
   email: string;
@@ -19,22 +17,30 @@ export class AuthComponent implements OnInit {
   logInEmail: string;
   logInPassword: string;
   teacher: Teacher;
+  emailRemind: string;
+  alert: number;
 
   constructor(private authService: AuthService,
               private router: Router) {
   }
 
   ngOnInit(): void {
+    this.teacher = JSON.parse(localStorage.getItem('teacher'));
+    if (this.teacher != null) {
+      this.router.navigate(['/home']);
+    }
+    this.alert = 0;
   }
 
   createTeacher(): void {
     this.authService.createTeacher(this.name, this.surname, this.email, this.password).subscribe(successResponse => {
-      alert(successResponse);
-      console.log('coble');
+      if (successResponse === 'This email is not available') {
+        this.alert = 2;
+      } else if (successResponse === 'Teacher created successfully') {
+        this.alert = 1;
+      }
     }, errorResponse => {
-      alert(errorResponse);
-      console.log('oxi');
-
+      alert('Server error');
     });
   }
 
@@ -53,7 +59,25 @@ export class AuthComponent implements OnInit {
       localStorage.setItem('teacher', JSON.stringify(this.teacher));
       this.router.navigate(['/home']);
     }, errorResponse => {
-      alert('Wrong email or password');
+      this.alert = 3;
+    });
+  }
+
+  checkEmptyField(): boolean {
+    if (this.name === undefined || this.surname === undefined || this.email === undefined
+      || this.name === '' || this.surname === '' || this.email === '') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  forgotPassword(): void {
+    this.authService.forgotPassword(this.emailRemind).subscribe(data => {
+      alert('email sent successfully');
+      this.emailRemind = '';
+    }, errorResponse => {
+      alert('No account match this email');
     });
   }
 

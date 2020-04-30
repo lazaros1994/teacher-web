@@ -20,7 +20,7 @@ export class AuthService {
 
   private createTeacherUrl = 'teacher/create';
   private findTeacherUrl = 'teacher/find';
-
+  private forgotPasswordUrl = 'teacher/forgotPassword'
   public createTeacher(name, surname, email, password) {
     const postRequestParameters = new FormData();
 
@@ -29,7 +29,7 @@ export class AuthService {
     postRequestParameters.append('email', email);
     postRequestParameters.append('password', password);
 
-    return this.http.post(this.createTeacherUrl,  postRequestParameters, {responseType:  'text'});
+    return this.http.post(this.createTeacherUrl, postRequestParameters, {responseType: 'text'});
   }
 
   public logIn(email, password) {
@@ -38,6 +38,13 @@ export class AuthService {
       .set('password', password);
 
     return this.http.get<Teacher>(this.findTeacherUrl, {params});
+  }
+
+  public forgotPassword(email) {
+    const params = new HttpParams()
+      .set('email', email);
+    console.log('edw')
+    return this.http.get<Teacher>(this.forgotPasswordUrl, {params});
 
   }
 

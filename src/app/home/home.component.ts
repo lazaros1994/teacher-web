@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   startTime: string;
   endTime: string;
   lessons: Lesson[] = [];
+  alert: number;
 
   constructor(private router: Router,
               private homeService: HomeService) {
@@ -25,12 +26,15 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.teacher = JSON.parse(localStorage.getItem('teacher'));
+    if (this.teacher === null) {
+      this.router.navigate(['/']);
+    }
     this.week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     this.getLessons();
+    this.alert = 0;
   }
 
   createLesson(day): void {
-    console.log(this.startTime);
     this.lessonCreate.teacher = this.teacher;
     this.lessonCreate.day = day;
     const startTimeTokens = this.startTime.split(':', 2);
@@ -40,7 +44,11 @@ export class HomeComponent implements OnInit {
     this.lessonCreate.endHour = endTimeTokens[0];
     this.lessonCreate.endMinute = endTimeTokens[1];
     this.homeService.createLesson(this.lessonCreate).subscribe(successResponse => {
-      alert(successResponse);
+      if (successResponse === 'Lesson created successfully') {
+        this.alert = 1;
+      } else if (successResponse === 'These hours are not available') {
+        this.alert = 3;
+      }
       this.lessonCreate = new Lesson();
       this.startTime = '';
       this.endTime = '';
@@ -66,9 +74,11 @@ export class HomeComponent implements OnInit {
   }
 
   checkEmptyField(): boolean {
-    if (this.startTime === undefined || this.endTime === undefined || this.lessonCreate.course === undefined || this.lessonCreate.studentName === undefined ||
+    if (this.startTime === undefined || this.endTime === undefined || this.lessonCreate.course === undefined ||
+      this.lessonCreate.studentName === undefined ||
       this.lessonCreate.studentSurname === undefined
-      || this.lessonCreate.euroPerHour === undefined || this.startTime === '' || this.endTime === '' || this.lessonCreate.course === '' || this.lessonCreate.studentName === '' ||
+      || this.lessonCreate.euroPerHour === undefined || this.startTime === '' || this.endTime === '' ||
+      this.lessonCreate.course === '' || this.lessonCreate.studentName === '' ||
       this.lessonCreate.studentSurname === ''
       || this.lessonCreate.euroPerHour === null) {
       return true;
@@ -79,12 +89,15 @@ export class HomeComponent implements OnInit {
 
   deleteLesson(lesson): void {
     this.homeService.deleteLesson(lesson).subscribe(data => {
-      const alertMessage = 'Lesson' + data + 'deleted';
-      alert(alertMessage);
       this.getLessons();
+      this.alert = 2;
     }, errorResponse => {
       alert(errorResponse);
     });
+  }
+
+  logout(): void {
+    localStorage.clear();
   }
 }
 

@@ -32,6 +32,7 @@ export class CalendarComponent implements OnInit {
   allCancelledLessons: CancelledLesson[] = [];
   weeklyAndCancelledLessons: LessonWithCancelled[] = [];
   cancelledLessonToBeDeleted: CancelledLesson = new CancelledLesson();
+  alert: number;
 
   constructor(private router: Router,
               private homeService: HomeService,
@@ -40,6 +41,9 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.teacher = JSON.parse(localStorage.getItem('teacher'));
+    if (this.teacher === null) {
+      this.router.navigate(['/']);
+    }
     this.currentMonth = this.now.getUTCMonth();
     this.currentYear = this.now.getFullYear();
     this.week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -50,6 +54,7 @@ export class CalendarComponent implements OnInit {
       this.allDays[i] = new Date(this.currentYear, this.currentMonth, i + 1);
     }
     this.selectedDate = this.now;
+    this.alert = 0;
     this.getLessons();
     this.getAllExtraLessons();
     this.getAllCancelledLessons();
@@ -113,7 +118,14 @@ export class CalendarComponent implements OnInit {
     this.extraLessonCreate.endHour = endTimeTokens[0];
     this.extraLessonCreate.endMinute = endTimeTokens[1];
     this.calendarService.createExtraLesson(this.extraLessonCreate).subscribe(successResponse => {
-      alert(successResponse);
+      console.log(successResponse);
+      if (successResponse === 'ExtraLesson created successfully') {
+        console.log('1')
+        this.alert = 1;
+      } else if (successResponse === 'These hours are not available') {
+        console.log('2')
+        this.alert = 2;
+      }
       this.extraLessonCreate = new ExtraLesson();
       this.startTime = '';
       this.endTime = '';
@@ -152,7 +164,7 @@ export class CalendarComponent implements OnInit {
     this.cancelledLesson.month = day.getMonth();
     this.cancelledLesson.day = day.getDate();
     this.calendarService.createCancelledLesson(this.cancelledLesson).subscribe(successResponse => {
-      alert(successResponse);
+      this.alert = 3;
       this.extraLessonCreate = new ExtraLesson();
       this.startTime = '';
       this.endTime = '';
@@ -167,8 +179,7 @@ export class CalendarComponent implements OnInit {
 
   deleteExtraLesson(extraLesson): void {
     this.calendarService.deleteExtraLesson(extraLesson).subscribe(data => {
-      const alertMessage = 'Extra Lesson' + data + 'deleted';
-      alert(alertMessage);
+      this.alert = 4;
       this.getLessons();
       this.getAllCancelledLessons();
       this.getAllExtraLessons();
@@ -178,19 +189,15 @@ export class CalendarComponent implements OnInit {
   }
 
   deleteCancelledLesson(lesson, day): void {
-    console.log('day is ' + day);
-    console.log('current is ' + this.selectedDate);
-    console.log(this.allCancelledLessons);
+
     this.allCancelledLessons.forEach(cl => {
-      console.log(cl.lesson.id);
-      console.log(cl.id);
+
       if (lesson.id === cl.lesson.id && cl.year === day.getFullYear() &&
         cl.month === day.getMonth() && cl.day === day.getDate()) {
         this.cancelledLessonToBeDeleted = cl;
 
         this.calendarService.deleteCancelledLesson(this.cancelledLessonToBeDeleted).subscribe(data => {
-          const alertMessage = 'Cancelled Lesson' + data + 'deleted';
-          alert(alertMessage);
+          this.alert = 5;
           this.getLessons();
           this.getAllCancelledLessons();
           this.getAllExtraLessons();
@@ -227,4 +234,7 @@ export class CalendarComponent implements OnInit {
     });
   }
 
+  logout(): void {
+    localStorage.clear();
+  }
 }

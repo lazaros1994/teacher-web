@@ -158,6 +158,11 @@ input{
 }
 
 .row{
-
   padding-bottom: 15px;
+}
+
+.myAlert {
+  top: 0;
+  position: fixed;
+  z-index: 999;
 }
